@@ -128,8 +128,6 @@ def api_show_location(request, id):
     """
     location = Location.objects.get(id=id)
 
-    print("location =", location)
-
     return JsonResponse(
         {
             "name": location.name,
