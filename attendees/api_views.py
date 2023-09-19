@@ -23,7 +23,16 @@ def api_list_attendees(request, conference_id):
         ]
     }
     """
-    return JsonResponse({})
+    response = []
+    attendees = Attendee.objects.all()
+    for attendee in attendees:
+        response.append(
+            {
+                "name": attendee.name,
+                "href": attendee.get_api_url(),
+            }
+        )
+    return JsonResponse({"attendees": response})
 
 
 def api_show_attendee(request, id):
