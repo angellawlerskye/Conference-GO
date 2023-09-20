@@ -196,6 +196,10 @@ def api_show_location(request, id):
         "state": the two-letter abbreviation for the state,
     }
     """
+    """
+    Angel's Notes
+    commenting out old api_show_location function in favor of
+    one that uses the LocationDetailEncoder
     location = Location.objects.get(id=id)
 
     print("location =", location)
@@ -209,4 +213,12 @@ def api_show_location(request, id):
             "updated": location.updated,
             "state": location.state.abbreviation,
         },
+    )
+    Angel's Notes
+    """
+    location = Location.objects.get(id=id)
+    return JsonResponse(
+        location,
+        encoder=LocationDetailEncoder,
+        safe=False,
     )
