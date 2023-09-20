@@ -76,6 +76,12 @@ def api_show_conference(request, id):
         }
     }
     """
+
+    """ Angel's DocString - this is the old code for the api_show_conference
+     function before
+    replacing it with the new function that uses
+    the ConferenceDetailEncoder.
+
     conference = Conference.objects.get(id=id)
     return JsonResponse(
         {
@@ -92,6 +98,13 @@ def api_show_conference(request, id):
                 "href": conference.location.get_api_url(),
             },
         }
+    )
+    Angel's notes"""
+
+    conference = Conference.objects.get(id=id)
+    return JsonResponse(
+        conference,
+        encoder=ConferenceDetailEncoder,
     )
 
 
