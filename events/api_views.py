@@ -36,6 +36,21 @@ def api_list_conferences(request):
     return JsonResponse({"conferences": response})
 
 
+class ConferenceDetailEncoder(ModelEncoder):
+    model = Conference
+    properties = [
+        "name",
+        "description",
+        "max_presentations",
+        "max_attendees",
+        "starts",
+        "ends",
+        "created",
+        "updated",
+        "location",
+    ]
+
+
 def api_show_conference(request, id):
     """
     Returns the details for the Conference model specified
