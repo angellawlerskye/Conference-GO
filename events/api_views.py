@@ -153,6 +153,12 @@ def api_list_locations(request):
         ]
     }
     """
+
+    """
+    Angel's Note
+    changed api_list_locations function
+    to a version that uses the LocationListEncoder
+
     response = []
     locations = Location.objects.all()
     for location in locations:
@@ -163,6 +169,13 @@ def api_list_locations(request):
             }
         )
     return JsonResponse({"locations": response})
+    """
+
+    locations = Location.objects.all()
+    return JsonResponse(
+        {"locations": locations},
+        encoder=LocationListEncoder,
+    )
 
 
 class LocationDetailEncoder(ModelEncoder):
