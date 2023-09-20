@@ -5,6 +5,11 @@ from django.http import JsonResponse
 from .models import Presentation
 
 
+class PresentationListEncoder(ModelEncoder):
+    model = Presentation
+    properties = ["title"]
+
+
 def api_list_presentations(request, conference_id):
     """
     Lists the presentation titles and the link to the
@@ -27,6 +32,11 @@ def api_list_presentations(request, conference_id):
         ]
     }
     """
+    """
+    Angel's Notes
+    comenting out old api_list_presentations function in favor
+    of a new one that uses the PresentationListEncoder
+
     presentations = [
         {
             "title": p.title,
@@ -36,6 +46,13 @@ def api_list_presentations(request, conference_id):
         for p in Presentation.objects.filter(conference=conference_id)
     ]
     return JsonResponse({"presentations": presentations})
+    """
+
+    presentations = Presentation.objects.all()
+    return JsonResponse(
+        {"presentations": presentations},
+        encoder=PresentationListEncoder,
+    )
 
 
 class PresentationDetailEncoder(ModelEncoder):
@@ -48,6 +65,9 @@ class PresentationDetailEncoder(ModelEncoder):
         "synopsis",
         "created",
     ]
+
+    def get_extra_data(self, o):
+        return {"status": o.status.name}
 
 
 def api_show_presentation(request, id):
