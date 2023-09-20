@@ -165,6 +165,20 @@ def api_list_locations(request):
     return JsonResponse({"locations": response})
 
 
+class LocationDetailEncoder(ModelEncoder):
+    model = Location
+    properties = [
+        "name",
+        "city",
+        "room_count",
+        "created",
+        "updated",
+    ]
+
+    def get_extra_data(self, o):
+        return {"state": o.state.abbreviation}
+
+
 def api_show_location(request, id):
     """
     Returns the details for the Location model specified
