@@ -10,6 +10,11 @@ class ConferenceListEncoder(ModelEncoder):
     properties = ["name"]
 
 
+class LocationListEncoder(ModelEncoder):
+    model = Location
+    properties = ["name"]
+
+
 def api_list_conferences(request):
     """
     Lists the conference names and the link to the conference.
@@ -67,6 +72,9 @@ class ConferenceDetailEncoder(ModelEncoder):
         "updated",
         "location",
     ]
+    encoders = {
+        "location": LocationListEncoder(),
+    }
 
 
 def api_show_conference(request, id):
