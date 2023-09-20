@@ -63,14 +63,13 @@ class ConferenceDetailEncoder(ModelEncoder):
     model = Conference
     properties = [
         "name",
-        "description",
-        "max_presentations",
-        "max_attendees",
         "starts",
         "ends",
+        "description",
         "created",
         "updated",
-        "location",
+        "max_presentations",
+        "max_attendees",
     ]
     encoders = {
         "location": LocationListEncoder(),
@@ -131,6 +130,7 @@ def api_show_conference(request, id):
     return JsonResponse(
         conference,
         encoder=ConferenceDetailEncoder,
+        safe=False,
     )
 
 
