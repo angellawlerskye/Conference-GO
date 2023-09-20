@@ -5,6 +5,11 @@ from django.http import JsonResponse
 from .models import Conference, Location
 
 
+class ConferenceListEncoder(ModelEncoder):
+    model = Conference
+    properties = ["name"]
+
+
 def api_list_conferences(request):
     """
     Lists the conference names and the link to the conference.
@@ -24,6 +29,12 @@ def api_list_conferences(request):
         ]
     }
     """
+
+    """
+    Angel's Notes
+    commenting out the old api_list_conferences function in favor of
+    a new version that uses the new ConferenceListEncoder.
+
     response = []
     conferences = Conference.objects.all()
     for conference in conferences:
@@ -34,6 +45,13 @@ def api_list_conferences(request):
             }
         )
     return JsonResponse({"conferences": response})
+    """
+
+    conferences = Conference.objects.all()
+    return JsonResponse(
+        {"conferences": conferences},
+        encoder=ConferenceListEncoder,
+    )
 
 
 class ConferenceDetailEncoder(ModelEncoder):
