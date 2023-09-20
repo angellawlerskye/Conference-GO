@@ -1,3 +1,5 @@
+from common.json import ModelEncoder
+
 from django.http import JsonResponse
 
 from .models import Conference, Location
@@ -127,6 +129,8 @@ def api_show_location(request, id):
     }
     """
     location = Location.objects.get(id=id)
+
+    print("location =", location)
 
     return JsonResponse(
         {
