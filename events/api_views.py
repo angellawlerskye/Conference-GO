@@ -202,6 +202,9 @@ def api_list_locations(request):
         )
 
 
+32
+
+
 class LocationDetailEncoder(ModelEncoder):
     model = Location
     properties = [
@@ -216,6 +219,7 @@ class LocationDetailEncoder(ModelEncoder):
         return {"state": o.state.abbreviation}
 
 
+@require_http_methods(["DELETE", "GET", "PUT"])
 def api_show_location(request, id):
     """
     Returns the details for the Location model specified
