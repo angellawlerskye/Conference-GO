@@ -141,9 +141,22 @@ def api_show_presentation(request, id):
     )
     Angel's Notes
     """
-    presentation = Presentation.objects.get(id=id)
-    return JsonResponse(
-        presentation,
-        encoder=PresentationDetailEncoder,
-        safe=False,
-    )
+    if request.method == "GET":
+        presentation = Presentation.objects.get(id=id)
+        return JsonResponse(
+            presentation,
+            encoder=PresentationDetailEncoder,
+            safe=False,
+        )
+    elif request.method == "DELETE":
+        count, _ = Presentation.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
+        content = json.loads(request.body)
+        Presentation.objects.filter(id=id).update(**content)
+        attendee = Presentation.objects.get(id=id)
+        return JsonResponse(
+            attendee,
+            encoder=PresentationDetailEncoder,
+            safe=False,
+        )
