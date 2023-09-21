@@ -53,11 +53,13 @@ def api_list_presentations(request, conference_id):
     return JsonResponse({"presentations": presentations})
     """
 
-    presentations = Presentation.objects.all()
-    return JsonResponse(
-        {"presentations": presentations},
-        encoder=PresentationListEncoder,
-    )
+    if request.method == "GET":
+        presentations = Presentation.objects.all()
+        return JsonResponse(
+            {"presentations": presentations},
+            encoder=PresentationListEncoder,
+            safe=False,
+        )
 
 
 class PresentationDetailEncoder(ModelEncoder):
