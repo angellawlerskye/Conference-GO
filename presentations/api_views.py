@@ -6,6 +6,8 @@ from django.http import JsonResponse
 
 from .models import Presentation
 
+from events.models import Conference
+
 from django.views.decorators.http import require_http_methods
 
 
@@ -56,7 +58,7 @@ def api_list_presentations(request, conference_id):
     if request.method == "GET":
         presentation = Presentation.objects.filter(conference=conference_id)
         return JsonResponse(
-            {"presentation": presentation},
+            {"presentations": presentation},
             encoder=PresentationListEncoder,
         )
     else:
