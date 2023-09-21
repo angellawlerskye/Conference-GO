@@ -14,6 +14,7 @@ class PresentationListEncoder(ModelEncoder):
     properties = ["title"]
 
 
+@require_http_methods(["GET", "POST"])
 def api_list_presentations(request, conference_id):
     """
     Lists the presentation titles and the link to the
@@ -74,6 +75,7 @@ class PresentationDetailEncoder(ModelEncoder):
         return {"status": o.status.name}
 
 
+@require_http_methods(["DELETE", "GET", "PUT"])
 def api_show_presentation(request, id):
     """
     Returns the details for the Presentation model specified
