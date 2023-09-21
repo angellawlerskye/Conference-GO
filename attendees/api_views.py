@@ -1,3 +1,7 @@
+import json
+
+from django.views.decorators.http import require_http_methods
+
 from common.json import ModelEncoder
 
 from django.http import JsonResponse
@@ -12,6 +16,7 @@ class AttendeeListEncoder(ModelEncoder):
     properties = ["name"]
 
 
+@require_http_methods(["GET", "POST"])
 def api_list_attendees(request, conference_id):
     """
     Lists the attendees names and the link to the attendee
