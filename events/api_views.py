@@ -257,7 +257,9 @@ def api_show_location(request, id):
     )
     Angel's Notes
     """
-    location = Location.objects.get(id=id)
+
+    if request.method == "GET":
+        location = Location.objects.get(id=id)
     return JsonResponse(
         location,
         encoder=LocationDetailEncoder,
