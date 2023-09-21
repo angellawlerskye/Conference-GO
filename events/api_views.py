@@ -202,9 +202,6 @@ def api_list_locations(request):
         )
 
 
-32
-
-
 class LocationDetailEncoder(ModelEncoder):
     model = Location
     properties = [
@@ -269,3 +266,21 @@ def api_show_location(request, id):
     elif request.method == "DELETE":
         count, _ = Location.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
+    else:
+        content = json.loads(request.body)
+        try:
+            if "state" in content:
+                state = State.objects.get(abbreviation=content["state"])
+                content["state"] = state
+        except State.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid state abbreviation"},
+                status=400,
+            )
+        Location.objects.filter(id=id).update(**content)
+        location = Location.objects.get(id=id)
+        return JsonResponse(
+            location,
+            encoder=LocationDetailEncoder,
+            safe=False,
+        )
