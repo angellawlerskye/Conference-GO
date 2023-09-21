@@ -1,8 +1,12 @@
+import json
+
 from common.json import ModelEncoder
 
 from django.http import JsonResponse
 
 from .models import Presentation
+
+from django.views.decorators.http import require_http_methods
 
 
 class PresentationListEncoder(ModelEncoder):
