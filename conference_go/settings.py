@@ -54,13 +54,11 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    """
-    -Angel's Notes - commented out CSRF middleware
-    per instructions in Learn
-
-    "django.middleware.csrf.CsrfViewMiddleware",
-
-    """
+    # """
+    # -Angel's Notes - commented out CSRF middleware
+    # per instructions in Learn
+    # "django.middleware.csrf.CsrfViewMiddleware",
+    # """
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",

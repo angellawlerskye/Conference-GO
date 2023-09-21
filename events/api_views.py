@@ -6,7 +6,7 @@ from common.json import ModelEncoder
 
 from django.http import JsonResponse
 
-from .models import Conference, Location
+from .models import Conference, Location, State
 
 
 class ConferenceListEncoder(ModelEncoder):
@@ -176,11 +176,30 @@ def api_list_locations(request):
     return JsonResponse({"locations": response})
     """
 
-    locations = Location.objects.all()
-    return JsonResponse(
-        {"locations": locations},
-        encoder=LocationListEncoder,
-    )
+    if request.method == "GET":
+        locations = Location.objects.all()
+        return JsonResponse(
+            {"locations": locations},
+            encoder=LocationListEncoder,
+        )
+
+    else:
+        try:
+            content = json.loads(request.body)
+            state = State.objects.get(abbreviation=content["state"])
+            content["state"] = state
+        except State.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid state abbreviateion"},
+                status=400,
+            )
+
+        location = Location.objects.create(**content)
+        return JsonResponse(
+            location,
+            encoder=LocationDetailEncoder,
+            safe=False,
+        )
 
 
 class LocationDetailEncoder(ModelEncoder):
