@@ -1,3 +1,5 @@
+from django.views.decorators.http import require_http_methods
+
 from common.json import ModelEncoder
 
 from django.http import JsonResponse
@@ -134,6 +136,7 @@ def api_show_conference(request, id):
     )
 
 
+@require_http_methods(["GET", "POST"])
 def api_list_locations(request):
     """
     Lists the location names and the link to the location.
