@@ -5,7 +5,7 @@ import json
 from .keys import PEXELS_API_KEY, OPEN_WEATHER_API_KEY
 
 
-def get_location_photo_url(city, state):
+def get_photo(city, state):
     headers = {"Authorization": PEXELS_API_KEY}
     url = "https://api.pexels.com/v1/search"
     params = {
