@@ -1,5 +1,4 @@
 events/keys.py
-Dockerfile.dev
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
