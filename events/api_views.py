@@ -8,7 +8,7 @@ from django.http import JsonResponse
 
 from .models import Conference, Location, State
 
-from .acls import get_photo, get_weather_data
+from .acls import get_location_photo_url, get_weather_data
 
 
 class ConferenceListEncoder(ModelEncoder):
