@@ -21,6 +21,21 @@ class LocationListEncoder(ModelEncoder):
     properties = ["name"]
 
 
+class LocationDetailEncoder(ModelEncoder):
+    model = Location
+    properties = [
+        "name",
+        "city",
+        "room_count",
+        "created",
+        "updated",
+        "picture_url",
+    ]
+
+    def get_extra_data(self, o):
+        return {"state": o.state.abbreviation}
+
+
 @require_http_methods(["GET", "POST"])
 def api_list_conferences(request):
     """
@@ -96,7 +111,7 @@ class ConferenceDetailEncoder(ModelEncoder):
         "max_attendees",
     ]
     encoders = {
-        "location": LocationListEncoder(),
+        "location": LocationDetailEncoder(),
     }
 
 
@@ -252,21 +267,6 @@ def api_list_locations(request):
             encoder=LocationDetailEncoder,
             safe=False,
         )
-
-
-class LocationDetailEncoder(ModelEncoder):
-    model = Location
-    properties = [
-        "name",
-        "city",
-        "room_count",
-        "created",
-        "updated",
-        "picture_url",
-    ]
-
-    def get_extra_data(self, o):
-        return {"state": o.state.abbreviation}
 
 
 @require_http_methods(["DELETE", "GET", "PUT"])
