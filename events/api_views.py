@@ -241,7 +241,9 @@ def api_list_locations(request):
                 status=400,
             )
 
-        photo = get_photo(content["city"], content["state"].abbreviation)
+        photo = get_location_photo_url(
+            content["city"], content["state"].abbreviation
+        )
         content.update(photo)
 
         location = Location.objects.create(**content)
